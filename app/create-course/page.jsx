@@ -79,8 +79,8 @@ function CreateCourse() {
   const GenerateCourseLayout = async () => {
     setLoading(true)
     
-    const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail With field as Course Name, Description, Along with Chapters'
-    const USER_INPUT_PROMPT = `Category: ${userCourseInput?.category}, Topic: ${userCourseInput?.topic}, Description: ${userCourseInput?.description} Level:${userCourseInput?.level}, Duration: ${userCourseInput?.duration}, NoOfChapters:${userCourseInput?.noOfChapters},Language:${userCourseInput?.language},Board:${userCourseInput?.board} in JSON format`
+    const BASIC_PROMPT = 'Generate A Course Layout on Following Detail. IMPORTANT: The course name, description, chapter titles, duration, and structure must be highly relevant and strictly tailored to the specified Category/Grade level (e.g. if category is "12th Class", then the content level, complexity, and syllabus must match a 12th grade student standard). Output must contain fields: CourseName, Description, and Chapters (an array where each chapter object contains ChapterName, Description, and Duration).'
+    const USER_INPUT_PROMPT = ` Details: Category/Class: ${userCourseInput?.category}, Topic: ${userCourseInput?.topic}, Description: ${userCourseInput?.description}, Level/Difficulty: ${userCourseInput?.level}, Duration: ${userCourseInput?.duration}, NoOfChapters: ${userCourseInput?.noOfChapters}, Language: ${userCourseInput?.language}, Board/Syllabus: ${userCourseInput?.board} in JSON format`
     const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT
     console.log(FINAL_PROMPT);
 

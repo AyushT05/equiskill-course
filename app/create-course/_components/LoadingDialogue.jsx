@@ -19,9 +19,9 @@ function LoadingDialogue({loading}) {
     <div>
         <AlertDialog open={loading}>
         <AlertDialogContent>
-          <AlertDialogTitle/>
           <AlertDialogHeader>
-            <AlertDialogDescription>
+            <AlertDialogTitle/>
+            <AlertDialogDescription asChild>
                 <div className="flex flex-col items-center py-10">
                     <Image alt="placeholder"  src="/artificial-intelligence.gif" width={100} height={100} />
                     <h2>Please wait... AI is working on your request</h2>

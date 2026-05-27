@@ -34,7 +34,7 @@ function UserCourseList() {
             ) : courseList.length > 0 ? ( // Check if there are courses
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {courseList.map((course, index) => (
-                        <CourseCard course={course} key={index} />
+                        <CourseCard course={course} key={index} onRefresh={getUserCourses} />
                     ))}
                 </div>
             ) : (
