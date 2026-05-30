@@ -24,8 +24,8 @@ function EditChapters({ course, index, refreshData }) {
 
     useEffect(() => {
         if (Chapters && Chapters[index]) { // Check if Chapters and Chapters[index] exist
-            setName(Chapters[index]["Chapter Name"] || ''); // Use "Chapter Name" key
-            setAbout(Chapters[index].About || '');
+            setName(Chapters[index].ChapterName || Chapters[index]["Chapter Name"] || ''); 
+            setAbout(Chapters[index].About || Chapters[index].Description || '');
         }
     }, [course, index]); // Add index to the dependency array
 
@@ -33,8 +33,17 @@ function EditChapters({ course, index, refreshData }) {
         if (!Chapters || !Chapters[index]) return; // Check if Chapters and Chapters[index] exist
 
         // Update the course output with new values
-        course.courseOutput.Chapters[index]["Chapter Name"] = Name; // Use "Chapter Name" key
-        course.courseOutput.Chapters[index].About = About;
+        if ("ChapterName" in course.courseOutput.Chapters[index]) {
+            course.courseOutput.Chapters[index].ChapterName = Name;
+        } else {
+            course.courseOutput.Chapters[index]["Chapter Name"] = Name;
+        }
+
+        if ("Description" in course.courseOutput.Chapters[index]) {
+            course.courseOutput.Chapters[index].Description = About;
+        } else {
+            course.courseOutput.Chapters[index].About = About;
+        }
 
         try {
             const result = await db.update(CourseList).set({

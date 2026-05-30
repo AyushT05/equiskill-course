@@ -11,7 +11,7 @@ function ChapterListCard({ chapter, index }) {
 
       {/* Chapter Details */}
       <div className="flex-1">
-        <h2 className="font-semibold text-gray-800">{chapter?.["Chapter Name"]}</h2>
+        <h2 className="font-semibold text-gray-800">{chapter?.ChapterName || chapter?.["Chapter Name"]}</h2>
         <h2 className="flex items-center gap-2 text-sm text-primary mt-1">
           <HiOutlineClock className="text-lg" /> {chapter?.Duration}
         </h2>
