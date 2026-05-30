@@ -42,19 +42,19 @@ function CreateCourse() {
       icon: <HiClipboardDocumentCheck />
     }
   ];
-    const { userCourseInput, setUserCourseInput } = useContext(UserInputContext);
+  const { userCourseInput, setUserCourseInput } = useContext(UserInputContext);
 
   const [activeIndex, setActiveIndex] = useState(0);
   useEffect(() => {
     console.log(userCourseInput);
   }, [userCourseInput]);
 
-  const [loading,setLoading] = useState(false);
-  const {user} =useUser();
-  const router=useRouter();
+  const [loading, setLoading] = useState(false);
+  const { user } = useUser();
+  const router = useRouter();
 
   const checkStatus = () => {
-    if (!userCourseInput?.length==0) return true;
+    if (!userCourseInput?.length == 0) return true;
 
 
     if (activeIndex === 0 && (!userCourseInput.category || userCourseInput.category.length === 0)) {
@@ -74,13 +74,13 @@ function CreateCourse() {
     return false;
   };
 
-  
+
 
   const GenerateCourseLayout = async () => {
     setLoading(true)
-    
-    const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail With field as Course Name, Description, Along with Chapters'
-    const USER_INPUT_PROMPT = `Category: ${userCourseInput?.category}, Topic: ${userCourseInput?.topic}, Description: ${userCourseInput?.description} Level:${userCourseInput?.level}, Duration: ${userCourseInput?.duration}, NoOfChapters:${userCourseInput?.noOfChapters},Language:${userCourseInput?.language},Board:${userCourseInput?.board} in JSON format`
+
+    const BASIC_PROMPT = 'Act as an expert curriculum designer. Generate a highly detailed academic Course Layout based on the following details. IMPORTANT: The course name, description, chapter titles, duration, and structure must be rigorous, comprehensive, and strictly tailored to the specified Category/Grade level (e.g., if category is "12th Class", the syllabus must match an advanced 12th-grade standard). Ensure chapters cover all foundational and advanced concepts necessary for exam preparation or deep study. Output must be in JSON format containing fields: CourseName, Description, and Chapters (an array where each chapter object contains ChapterName, Description, and Duration).'
+    const USER_INPUT_PROMPT = ` Details: Category/Class: ${userCourseInput?.category}, Topic: ${userCourseInput?.topic}, Description: ${userCourseInput?.description}, Level/Difficulty: ${userCourseInput?.level}, Duration: ${userCourseInput?.duration}, NoOfChapters: ${userCourseInput?.noOfChapters}, Language: ${userCourseInput?.language}, Board/Syllabus: ${userCourseInput?.board} in JSON format`
     const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT
     console.log(FINAL_PROMPT);
 
@@ -88,8 +88,8 @@ function CreateCourse() {
     console.log(JSON.parse(result.response?.text()))
     setLoading(false)
     SaveCourseLayoutInDb(JSON.parse(result.response?.text()))
-    
-    
+
+
   }
 
   const SaveCourseLayoutInDb = async (courseLayout) => {
@@ -97,22 +97,23 @@ function CreateCourse() {
     setLoading(true)
     const res = await db.insert(CourseList).values({
       courseId: id,
-      name:userCourseInput?.topic,
-      level:userCourseInput?.level,
-      category:userCourseInput?.category,
-      language:userCourseInput?.language,
-      board:userCourseInput?.board,
-      courseOutput:courseLayout,
-      createdBy:user?.primaryEmailAddress?.emailAddress,
-      userName:user?.fullName,
-      userProfileImage:user?.imageUrl
+      name: userCourseInput?.topic,
+      level: userCourseInput?.level,
+      category: userCourseInput?.category,
+      language: userCourseInput?.language,
+      board: userCourseInput?.board,
+      includeVideo: userCourseInput?.displayVideo,
+      courseOutput: courseLayout,
+      createdBy: user?.primaryEmailAddress?.emailAddress,
+      userName: user?.fullName,
+      userProfileImage: user?.imageUrl
     })
     console.log("Finish");
-    router.replace('/create-course/'+id)
+    router.replace('/create-course/' + id)
     setLoading(false);
-   
 
-  
+
+
   }
 
   return (
@@ -124,9 +125,8 @@ function CreateCourse() {
             <div key={item.id} className='flex items-center'>
               <div className='flex flex-col items-center w-[50px] md:w-[100px]'>
                 <div
-                  className={`p-3 rounded-full text-white ${
-                    activeIndex >= index ? "bg-[#003cb3]" : "bg-gray-200"
-                  }`}
+                  className={`p-3 rounded-full text-white ${activeIndex >= index ? "bg-[#003cb3]" : "bg-gray-200"
+                    }`}
                 >
                   {item.icon}
                 </div>
@@ -134,9 +134,8 @@ function CreateCourse() {
               </div>
               {index !== StepperOptions.length - 1 && (
                 <div
-                  className={`h-1 w-[50px] md:w-[100px] lg:w-[170px] rounded-full ${
-                    activeIndex > index ? "bg-[#003cb3]" : "bg-gray-300"
-                  }`}
+                  className={`h-1 w-[50px] md:w-[100px] lg:w-[170px] rounded-full ${activeIndex > index ? "bg-[#003cb3]" : "bg-gray-300"
+                    }`}
                 ></div>
               )}
             </div>
@@ -145,8 +144,8 @@ function CreateCourse() {
       </div>
 
       <div className="px-10 md:px-20 lg:px-45 mt-10">
-        {activeIndex === 0 ?<SelectCategory />:
-        activeIndex === 1 ?<TopicDescription />:<SelectOption/>
+        {activeIndex === 0 ? <SelectCategory /> :
+          activeIndex === 1 ? <TopicDescription /> : <SelectOption />
         }
         <div className="flex justify-between mt-10">
           <Button
@@ -163,14 +162,14 @@ function CreateCourse() {
           )}
           {activeIndex === 2 && (
             <Button
-            disabled={checkStatus()}
-             onClick={GenerateCourseLayout}>
+              disabled={checkStatus()}
+              onClick={GenerateCourseLayout}>
               Generate Course Layout
             </Button>
           )}
         </div>
       </div>
-      <LoadingDialogue loading={loading}/>
+      <LoadingDialogue loading={loading} />
     </div>
   );
 }

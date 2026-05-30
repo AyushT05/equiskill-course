@@ -16,9 +16,9 @@ function ChapterList({ course,refreshData }) {
             <div className='flex gap-2 items-center'>
               <h2 className='bg-primary flex-none h-10 w-10 text-white rounded-full text-center p-2'>{index + 1}</h2>
               <div>
-                <h2 className='font-medium text-lg'>{Chapter?.["Chapter Name"]} 
+                <h2 className='font-medium text-lg'>{Chapter?.ChapterName || Chapter?.["Chapter Name"]} 
                     <EditChapters course={course} index={index} refreshData={refreshData} /></h2>
-                <p className='text-sm text-gray-500'>{Chapter?.About}</p>
+                <p className='text-sm text-gray-500'>{Chapter?.About || Chapter?.Description}</p>
                 <p className='flex gap-2 text-primary items-center'><HiOutlineClock /> {Chapter.Duration}</p>
               </div>
             </div> 

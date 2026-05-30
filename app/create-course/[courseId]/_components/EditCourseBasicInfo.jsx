@@ -24,7 +24,7 @@ function EditCourseBasicInfo({course,refreshData}) {
 
    useEffect(()=>{
     if (course?.courseOutput) {
-        setName(course?.courseOutput?.Name || '');
+        setName(course?.courseOutput?.Name || course?.courseOutput?.CourseName || '');
         setDiscription(course?.courseOutput?.Description || '');
     }
     },[course]);
@@ -32,7 +32,11 @@ function EditCourseBasicInfo({course,refreshData}) {
    const onUpdateHandler=async()=>{
     if (!course?.courseOutput) return; // prevent update if courseOutput is undefined
 
-    course.courseOutput.Name=Name;
+    if ("CourseName" in course.courseOutput) {
+        course.courseOutput.CourseName = Name;
+    } else {
+        course.courseOutput.Name = Name;
+    }
     course.courseOutput.Description=Discription;
     const  result = await db.update(CourseList).set({
          courseOutput:course?.courseOutput

@@ -22,7 +22,7 @@ function CourseBasicInfo({ course, refreshData }) {
     <div className='p-10 border rounded-xl shadow-sm mt-5'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
         <div>
-          <h2 className='font-bold text-2xl'>{course?.courseOutput?.["Name"]}
+          <h2 className='font-bold text-2xl'>{course?.courseOutput?.Name || course?.courseOutput?.CourseName || course?.name}
             <EditCourseBasicInfo course={course} refreshData={() => refreshData(true)} /> </h2>
           <p className='text-sm text-gray-400 mt-3'>{course?.courseOutput?.Description}</p>
           <div>
