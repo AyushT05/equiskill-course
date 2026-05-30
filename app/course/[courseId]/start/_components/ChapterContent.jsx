@@ -2,6 +2,9 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import YouTube from 'react-youtube';
 import rehypeRaw from 'rehype-raw';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css'; // Essential for proper math formatting
 
 const opts = {
   height: '390',
@@ -36,9 +39,13 @@ function ChapterContent({ chapter, content }) {
           >
             
             <h3 className="font-semibold text-2xl text-primary">{item?.title || item?.["title"]}</h3>
-            <ReactMarkdown rehypePlugins={[rehypeRaw]} className="text-lg text-gray-800 leading-relaxed mt-3">
+            <ReactMarkdown 
+              remarkPlugins={[remarkMath]} 
+              rehypePlugins={[rehypeRaw, rehypeKatex]} 
+              className="text-lg text-gray-800 leading-relaxed mt-3"
+            >
                 {item?.explanation || item?.["explanation"] || ""}
-              </ReactMarkdown>
+            </ReactMarkdown>
             {/* Code Block */}
             {(() => {
               const codeStr = String(

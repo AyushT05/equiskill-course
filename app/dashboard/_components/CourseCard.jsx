@@ -57,7 +57,7 @@ function CourseCard({ course, onRefresh }) {
 
         <div className="flex items-center justify-between mt-2">
           <h2 className="flex gap-2 items-center px-2 py-1 bg-purple-100 text-primary text-sm rounded-md">
-            <HiOutlineBookOpen className="text-lg" /> {course?.courseOutput?.NoOfChapters || 0} Chapters
+            <HiOutlineBookOpen className="text-lg" /> {course?.courseOutput?.Chapters?.length || course?.courseOutput?.NoOfChapters || 0} Chapters
           </h2>
           <h2 className="text-sm bg-purple-100 text-primary px-2 py-1 rounded-md">{course?.level}</h2>
         </div>

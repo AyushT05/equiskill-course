@@ -1,21 +1,30 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
-import React, { useEffect, useState } from "react";
+import React from 'react';
+import { Montserrat } from 'next/font/google';
+import Navbar from '@/components/landing/Navbar';
+import Herosection from '@/components/landing/Herosection';
+import Featuresec from '@/components/landing/Featuresec';
+import Workflow from '@/components/landing/Workflow';
+import Testimonials from '@/components/landing/Testimonials';
+import Footer from '@/components/landing/Footer';
+import Pricing from '@/components/landing/Pricing';
+
+const montserrat = Montserrat({ subsets: ['latin'] });
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
-    <div className="p-8 text-center">
-      <h1 className="text-3xl font-bold mb-4">Welcome to Equiskill-AI</h1>
-      <Button className="mb-4">Click</Button>
-      <div className="flex justify-center">
-        {mounted ? <UserButton /> : <div className="w-8 h-8 rounded-full bg-slate-200 animate-pulse" />}
+    <div className={`flex flex-col min-h-screen bg-slate-50 ${montserrat.className}`}>
+      <Navbar />
+      <Herosection />
+
+      <div className="flex-grow pt-15 px-6">
+        <Featuresec />
+        <Workflow />
+        <Pricing />
+        <Testimonials />
       </div>
+
+      <Footer />
     </div>
   );
 }
