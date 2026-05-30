@@ -113,11 +113,14 @@ function CoursePage({ params: paramsPromise }) {
 
       <LoadingDialogue loading={loading} />
       <CourseBasicInfo course={course} refreshData={() => getCourse()} />
+        <div className="items-center justify-center flex">     
+           <Button className='my-10' onClick={GenerateChapterContent}>Generate</Button>
+        </div>
       <CourseDetail course={course} />
       <ChapterList course={course} refreshData={() => getCourse()} />
-      <Button className="my-10" onClick={GenerateChapterContent}>Generate</Button>
+      
     </div>
-  )
+  );
 }
 
 export default CoursePage;

@@ -5,8 +5,8 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div>
-      <h1>Subscribe to my youtube channel</h1>
-      <Button>CLick</Button>
+      <h1>Welcome to Equiskill-AI</h1>
+      <Button>Click</Button>
 
       <UserButton/>
     </div>
