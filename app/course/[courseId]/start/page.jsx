@@ -69,7 +69,7 @@ function CourseStart({ params }) {
                 />
 
                 {/* Main Content Display */}
-                <div className="md:ml-72 flex-grow overflow-y-auto h-[calc(100vh-72px)] p-4">
+                <div className="md:ml-72 flex-grow overflow-y-auto h-[calc(100vh-72px)] p-4 bg-gray-50/60">
                     <ChapterContent chapter={selectedChapter} content={chapterContent} />
                 </div>
             </div>

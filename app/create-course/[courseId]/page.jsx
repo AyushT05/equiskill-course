@@ -63,31 +63,25 @@ function CoursePage({ params: paramsPromise }) {
           const chapterName = chapter?.ChapterName || chapter?.["Chapter Name"] || `Chapter ${index + 1}`;
 
           try {
-            // Enforce category/class standard and depth in the explanation
-            const PROMPT = `Act as an expert academic tutor and explain the concept in exhaustive detail for the Topic: ${course?.name}, Chapter: ${chapterName}, Board: ${course?.board}, Language: ${course?.language}. 
-IMPORTANT: The content level, complexity, depth, and explanation style must be strictly relevant and tailored to the Category/Grade level: ${course?.category || '12th Class'} standard.
-To make this highly useful for study purposes, you MUST include:
-- In-depth theoretical explanations and step-by-step breakdowns.
-- Real-world applications, practical examples, or case studies.
-- Important formulas, definitions, and key takeaways.
-- Practice questions or quick self-assessment quizzes at the end.
+            // Structured prompt — one clear idea per topic, no subheaders inside explanation
+            const PROMPT = `You are an expert tutor creating content for a course card UI — NOT a textbook.
 
-FORMATTING INSTRUCTIONS: The 'explanation' field must be structured using rich Markdown.
-1. Break down explanations into detailed but highly readable paragraphs.
-2. Use bolding (**key terms**, **important formulas**) to draw attention.
-3. Use bullet points (-) or numbered lists (1.) for lists of features, steps, or comparisons.
-4. Use markdown subheaders (e.g. ### Core Concept, ### Real-world Example, ### Practice Questions).
-5. Use markdown blockquotes (> Definition:) for key callouts.
-6. Make it read like a premium, comprehensive study guide.
+Course: ${course?.name}
+Chapter: ${chapterName}
+Level: ${course?.category || '12th Class'}
+Board: ${course?.board}
+Language: ${course?.language}
 
-IMPORTANT FOR CODE EXAMPLES: Only populate the 'codeExample' field with a code block (wrapped in <precode>...</precode>) if the course is about programming, coding, software, or computer science. If the course is a non-programming/non-coding subject, set the 'codeExample' field to an empty string "".
+TASK: Break this chapter into 5–8 focused topics. Each topic covers ONE clear idea — a definition, a concept, an algorithm step, a formula, or a real-world application. Do not bundle multiple ideas into one topic.
 
-STRICT JSON FORMATTING RULES:
-1. You MUST return ONLY a valid, parseable JSON object.
-2. DO NOT use any JavaScript code, expressions, or array methods like '.join("\\n")' in the output.
-3. For multi-line strings in the 'explanation' field, use literal newline characters (\\n) embedded directly within a single string.
+RULES FOR EACH TOPIC:
+- "title": Short, specific title (4–8 words). NOT generic labels like "Core Concept" or "Introduction".
+- "explanation": Write as much as needed to fully explain the idea — but keep it organized. Use simple, everyday language a student would understand. Always include: a plain-English explanation of what it is and why it matters, a relatable real-world analogy or example, and any important formula, rule, or key fact highlighted in a blockquote (> ). Use **bold** for key terms. Use bullet lists or numbered steps where genuinely list-like. NO markdown headers (##, ###) inside explanation — the title IS the header.
+- "codeExample": A well-commented, runnable snippet (15–30 lines) ONLY if this specific topic is about programming or an algorithm. Otherwise "".
 
-The output must be a single JSON object containing a single key 'topics' which is an array of objects. Each object must have the fields: 'title' (string), 'explanation' (detailed explanation of this subtopic in Markdown format as a single string), and 'codeExample' (string).`;
+TONE: Friendly, clear, mentor-like. Write like you are explaining to a curious student in plain English — not like a textbook or Wikipedia article. Avoid jargon without explanation.
+
+Return ONLY valid JSON: { "topics": [ { "title": "", "explanation": "", "codeExample": "" } ] }`;
 
             console.log("Prompt for Chapter " + index + ":", PROMPT);
 
