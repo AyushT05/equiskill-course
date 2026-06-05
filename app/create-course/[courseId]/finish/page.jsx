@@ -44,9 +44,8 @@ function FinishPage({ params }) {
     };
 
     const getFullUrl = () => {
-        const host = process.env.NEXT_PUBLIC_HOST_NAME || "localhost:3019";
-        const protocol = host.startsWith("http") ? "" : "http://";
-        return `${protocol}${host}/course/${course?.courseId}`;
+        if (typeof window === 'undefined') return '';
+        return `${window.location.origin}/course/${course?.courseId}`;
     };
 
     const handleCopy = async () => {
