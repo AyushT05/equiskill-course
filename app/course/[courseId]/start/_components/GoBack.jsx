@@ -2,7 +2,7 @@ import React from 'react';
 
 const GoBack = () => {
   const handleGoBack = () => {
-    window.location.href = 'http://localhost:3019/dashboard';
+    window.location.href = `${window.location.origin}/dashboard`;
   };
 
   return (

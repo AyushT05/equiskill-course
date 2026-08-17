@@ -5,7 +5,7 @@ const groq = new Groq({
     dangerouslyAllowBrowser: true 
 });
 
-const modelName = "llama-3.3-70b-versatile";
+const modelName = "openai/gpt-oss-120b";
 
 export const GenerateCourseLayout_AI = {
     sendMessage: async (prompt) => {
